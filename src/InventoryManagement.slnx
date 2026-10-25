@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/Itens de Solução/">
+    <File Path="Create_DataBase.sql" />
+  </Folder>
+  <Project Path="InventoryManagement.Repositories/InventoryManagement.Repositories.csproj" Id="f8aa2f18-ccf4-422b-9871-7dc4eda07340" />
+  <Project Path="InventoryManagement.Services/InventoryManagement.Services.csproj" Id="b9e4a6c8-f0a5-4376-806e-0f5d085f168c" />
+  <Project Path="InventoryManagement.Web/InventoryManagement.Web.csproj" />
+</Solution>
