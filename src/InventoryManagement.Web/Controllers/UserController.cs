@@ -28,6 +28,14 @@ namespace InventoryManagement.Web.Controllers
 
             var result = _userService.ValidateLogin(model.Login, model.Password);
 
+            if (!result.Sucess)
+            {
+                ModelState.AddModelError(string.Empty, result.ErroMenssage!);
+                return View(model);
+            }
+
+            //PAREI AQUI, IMPLEMNETAR AUTENTICAÇÃO POR COOCKIE
+
         }
     }
 }

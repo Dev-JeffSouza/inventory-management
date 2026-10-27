@@ -8,6 +8,6 @@ namespace InventoryManagement.Repositories.Entities
         public required string Email { get; set; }
         public required string Password { get; set; }
         public required string Ativo { get; set; }
-        public int Login { get; set; }
+        public required string Login { get; set; }
     }
 }
