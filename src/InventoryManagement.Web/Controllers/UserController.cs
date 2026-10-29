@@ -16,12 +16,15 @@ namespace InventoryManagement.Web.Controllers
             _userService = userService;
         }
 
+        [Route("login")]
         public IActionResult Login()
         {
             return View();
         }
 
 
+        [Route("login")]
+        [HttpPost]
         public IActionResult Login(LoginViewModel model)
         {
             if (!ModelState.IsValid)
@@ -39,7 +42,7 @@ namespace InventoryManagement.Web.Controllers
 
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, model.Login)
+                new(ClaimTypes.NameIdentifier, model.Login)
             };
 
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

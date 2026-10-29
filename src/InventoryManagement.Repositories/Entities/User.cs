@@ -7,7 +7,7 @@ namespace InventoryManagement.Repositories.Entities
         public required string UserName { get; set; }
         public required string Email { get; set; }
         public required string Password { get; set; }
-        public required string Ativo { get; set; }
+        public required string Active { get; set; }
         public required string Login { get; set; }
     }
 }

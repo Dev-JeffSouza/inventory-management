@@ -11,6 +11,5 @@ namespace InventoryManagement.Web.Models.User
         [Required (ErrorMessage ="A senha é obrigatória.")]
         public required string Password { get; set; }
 
-
     }
 }

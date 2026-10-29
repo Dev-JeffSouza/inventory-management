@@ -31,21 +31,20 @@ namespace InventoryManagement.Repositories
                 cmd.Parameters.Add(new OracleParameter(":LOGIN", Login));
                 conn.Open();
 
-                using (var reader = cmd.ExecuteReader())
-                {
-                    if (reader.Read())
-                    {
-                        user = new User
-                        {
-                            CodUsu = reader.GetInt32(reader.GetOrdinal("CODUSU")),
-                            UserName = reader.GetString(reader.GetOrdinal("NOMEUSU")),
-                            Email = reader.GetString(reader.GetOrdinal("EMAIL")),
-                            Password = reader.GetString(reader.GetOrdinal("SENHA")),
-                            Ativo = reader.GetString(reader.GetOrdinal("ATIVO")),
-                            Login = reader.GetString(reader.GetOrdinal("LOGIN"))
+                var reader = cmd.ExecuteReader();
 
-                        };
-                    }
+                if (reader.Read())
+                {
+                    user = new User
+                    {
+                        CodUsu = reader.GetInt32(reader.GetOrdinal("CODUSU")),
+                        UserName = reader.GetString(reader.GetOrdinal("NOMEUSU")),
+                        Email = reader.GetString(reader.GetOrdinal("EMAIL")),
+                        Password = reader.GetString(reader.GetOrdinal("SENHA")),
+                        Active = reader.GetString(reader.GetOrdinal("ATIVO")),
+                        Login = reader.GetString(reader.GetOrdinal("LOGIN"))
+
+                    };
                 }
 
             }
