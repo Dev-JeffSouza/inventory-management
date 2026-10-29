@@ -17,7 +17,7 @@ namespace InventoryManagement.Services
             _userRepository = userRepository;
         } 
         
-        //Login do usuário
+        //Método de validação do login do usuário
 
         public ValidateLoginResult ValidateLogin(string Login, string Password)
         {

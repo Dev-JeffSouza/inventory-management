@@ -1,6 +1,9 @@
 ﻿using InventoryManagement.Services;
 using InventoryManagement.Web.Models.User;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace InventoryManagement.Web.Controllers
 {
@@ -8,7 +11,7 @@ namespace InventoryManagement.Web.Controllers
     {
         private readonly IUserService _userService;
 
-        public UserController (IUserService userService)
+        public UserController(IUserService userService)
         {
             _userService = userService;
         }
@@ -34,8 +37,24 @@ namespace InventoryManagement.Web.Controllers
                 return View(model);
             }
 
-            //PAREI AQUI, IMPLEMNETAR AUTENTICAÇÃO POR COOCKIE
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, model.Login)
+            };
 
+            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+            var authProperties = new AuthenticationProperties
+            {
+                AllowRefresh = true,
+                IsPersistent = true
+            };
+
+            HttpContext.SignInAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme, 
+                new ClaimsPrincipal(claimsIdentity),authProperties);
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }
