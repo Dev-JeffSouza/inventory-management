@@ -43,6 +43,12 @@ namespace InventoryManagement.Services
                 return result;
             }
 
+            if(user.Active == "N")
+            {
+                result.ErroMenssage = "Sua conta está inativa no momento. Solicite o desbloqueio junto à equipe de TI.";
+                return result;
+            }
+
             if (user.Password != Password)
             {
                 result.ErroMenssage = "Usuário ou senha inválidos.";

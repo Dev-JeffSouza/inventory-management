@@ -57,7 +57,16 @@ namespace InventoryManagement.Web.Controllers
                 CookieAuthenticationDefaults.AuthenticationScheme, 
                 new ClaimsPrincipal(claimsIdentity),authProperties);
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index","Home");
         }
+
+        [Route("logout")]
+        [HttpPost]
+        public IActionResult Logout()
+        {
+            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Login","User");
+        }
+
     }
 }

@@ -16,9 +16,11 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
         options.SlidingExpiration = true;
         
-    });
+    }); 
 
-var connectionString = builder.Configuration.GetConnectionString("InventoryManagementeConnectionString");
+builder.Configuration.AddEnvironmentVariables();
+
+var connectionString = builder.Configuration.GetConnectionString("InventoryManagementConnectionString");
 
 //Injeção das dependências
 builder.Services.AddScoped<IUserService, UserService>();

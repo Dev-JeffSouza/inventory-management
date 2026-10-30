@@ -2,3 +2,77 @@
     ViewData["Title"] = "Home";
 }
 
+@section Styles {
+    <link rel="stylesheet" href="~/css/home.css" />
+}
+
+<!----<div class="home-page">
+    <h1>Bem-vindo ao portal de gestão de Estoque!</h1>
+</div> -->
+
+<div class="app-wrapper">
+    <!-- BARRA LATERAL -->
+    <aside class="pane-sidebar">
+
+        <div class="sidebar-header">
+            <div class="brand-logo">
+
+                <span>JS</span>
+            </div>
+            <div class="brand-details">
+                <span class="brand-title">Empresa</span>
+                <span class="brand-subtitle">Gestão de Estoque</span>
+            </div>
+        </div>
+
+        <!-- navegação principal -->
+        <nav class="nav-bar">
+            <span class="nav-category">PAINÉIS</span>
+            <ul class="nav-list">
+                <li>
+                    <a href="#" class="nav-item active">
+                        <!-- Ícone de Caixa (Produtos) -->
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                        <span>Produtos</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-item">
+                        <!-- Ícone de Marcador de Mapa (Locais) -->
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        <span>Locais</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-item">
+                        <!-- Ícone de Parceiros -->
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                        <span>Parceiros</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-item">
+                        <!-- Ícone de Setas de Troca (Transferências) -->
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg>
+                        <span>Transferências</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- rodapé da sidebar (botão sair) -->
+        <div class="sidebar-footer">
+            <form asp-controller="User" asp-action="Logout">
+                <button type="submit" class="nav-item logout-btn">
+                    <!-- Ícone de Saída / Logout -->
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    <span>Sair</span>
+                </button>
+            </form>
+        </div>
+
+    </aside>
+
+    
+</div>
+

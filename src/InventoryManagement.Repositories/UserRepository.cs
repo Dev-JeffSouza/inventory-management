@@ -24,33 +24,33 @@ namespace InventoryManagement.Repositories
             using (var conn = new OracleConnection(connectionString))
             {
                 string query = @"SELECT CODUSU, NOMEUSU, EMAIL, SENHA, ATIVO, LOGIN 
-                                FROM USUARIO 
-                                WHERE LOGIN = :LOGIN";
+                         FROM USUARIO 
+                         WHERE UPPER(RTRIM(LOGIN)) = UPPER(:LOGIN)";
 
-                var cmd = new OracleCommand(query, conn);
-                cmd.Parameters.Add(new OracleParameter(":LOGIN", Login));
-                conn.Open();
-
-                var reader = cmd.ExecuteReader();
-
-                if (reader.Read())
+                using (var cmd = new OracleCommand(query, conn))
                 {
-                    user = new User
+                    cmd.Parameters.Add(new OracleParameter(":LOGIN", Login.Trim()));
+                    conn.Open();
+
+                    using (var reader = cmd.ExecuteReader())
                     {
-                        CodUsu = reader.GetInt32(reader.GetOrdinal("CODUSU")),
-                        UserName = reader.GetString(reader.GetOrdinal("NOMEUSU")),
-                        Email = reader.GetString(reader.GetOrdinal("EMAIL")),
-                        Password = reader.GetString(reader.GetOrdinal("SENHA")),
-                        Active = reader.GetString(reader.GetOrdinal("ATIVO")),
-                        Login = reader.GetString(reader.GetOrdinal("LOGIN"))
-
-                    };
+                        if (reader.Read())
+                        {
+                            user = new User
+                            {
+                                CodUsu = reader.GetInt32(reader.GetOrdinal("CODUSU")),
+                                UserName = reader.GetString(reader.GetOrdinal("NOMEUSU")),
+                                Email = reader.GetString(reader.GetOrdinal("EMAIL")),
+                                Password = reader.GetString(reader.GetOrdinal("SENHA")),
+                                Active = reader.GetString(reader.GetOrdinal("ATIVO")),
+                                Login = reader.GetString(reader.GetOrdinal("LOGIN"))
+                            };
+                        }
+                    }
                 }
-
             }
 
             return user;
-
         }
 
     }
