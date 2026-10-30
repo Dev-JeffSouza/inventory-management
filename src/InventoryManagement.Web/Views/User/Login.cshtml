@@ -9,21 +9,20 @@
 
 <div class="container-signin">
 
-    <form class="form-signin">
+    <form class="form-signin" asp-controller="User" asp-action="Login" novalidate>
         <div class="container-fields">
             <h1 id="title-signin">Login</h1>
 
             <label class="lb-fields-signin" for="txt-user">Usuário:</label>
-            <input class="fields-signin" id="txt-user" type="text" />
+            <input class="fields-signin" id="txt-user" type="text" asp-for="Login"/>
 
             <label class="lb-fields-signin" for="txt-password">Senha:</label>
-            <input class="fields-signin" id="txt-password" type="text" />
+            <input class="fields-signin" id="txt-password" type="text" asp-for="Password"/>
 
             <button class="btn-signin" type="submit">Prosseguir</button>
+
+            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
         </div>
-        
-       
-        
     </form>
 
 </div>

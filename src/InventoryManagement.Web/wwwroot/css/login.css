@@ -85,3 +85,11 @@
 #title-signin{
     font-weight: 500;
 }
+
+
+.text-danger {
+    color: #dc3545; 
+    font-size: 13px;
+    text-align: left;
+    width: 100%;
+}

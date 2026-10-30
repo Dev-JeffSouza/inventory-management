@@ -28,7 +28,7 @@ namespace InventoryManagement.Web.Controllers
         public IActionResult Login(LoginViewModel model)
         {
             if (!ModelState.IsValid)
-            {
+            {   
                 return View(model);
             }
 
