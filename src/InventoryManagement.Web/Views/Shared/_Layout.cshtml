@@ -1,30 +1,78 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - InventoryManagement.Web</title>
-    <script type="importmap"></script>
+    <title>@ViewData["Title"] - Gestor de Estoque</title>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/InventoryManagement.Web.styles.css" asp-append-version="true" />
+
+    @await RenderSectionAsync("Styles", required: false)
 </head>
 <body>
-    <header>
 
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+    <div class="app-wrapper">
+        <!-- BARRA LATERAL -->
+        <aside class="pane-sidebar">
+
+            <div class="sidebar-header">
+                <div class="brand-logo">
+                
+                    <span>JS</span>
+                </div>
+                <div class="brand-details">
+                    <span class="brand-title">Empresa</span>
+                    <span class="brand-subtitle">Gestão de Estoque</span>
+                </div>
+            </div>
+
+            <nav class="nav-bar">
+                <span class="nav-category">PAINÉIS</span>
+                <ul class="nav-list">
+                    <li>
+                        <a href="#" class="nav-item active">
+                            <i class="devicon-csharp-line"></i>
+                            <span>Produtos</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-item">
+                            <i class="devicon-oracle-original"></i>
+                            <span>Locais</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-item">
+                            <i class="devicon-javascript-plain"></i>
+                            <span>Parceiros</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-item">
+                            <i class="devicon-git-plain"></i>
+                            <span>Transferências</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="#" class="nav-item logout-btn">
+                    <i class="devicon-github-original"></i>
+                    <span>Sair</span>
+                </a>
+            </div>
+
+        </aside>
+
+        <div class="container">
+            <main>
+                @RenderBody()
+            </main>
+        </div>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            <!--&copy; 2026 - InventoryManagement.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a> -->
-        </div>
-    </footer>
-
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
