@@ -11,7 +11,7 @@ namespace InventoryManagement.Repositories
 
     public class UserRepository : BaseRepository, IUserRepository
     {
-        public UserRepository (string connectionString) :base(connectionString)
+        public UserRepository(string connectionString) : base(connectionString)
         {
             //Construtor para inicialização da connectionString
         }
@@ -24,8 +24,8 @@ namespace InventoryManagement.Repositories
             using (var conn = new OracleConnection(connectionString))
             {
                 string query = @"SELECT CODUSU, NOMEUSU, EMAIL, SENHA, ATIVO, LOGIN 
-                         FROM USUARIO 
-                         WHERE UPPER(RTRIM(LOGIN)) = UPPER(:LOGIN)";
+                                 FROM USUARIO 
+                                 WHERE UPPER(RTRIM(LOGIN)) = UPPER(RTRIM(:LOGIN))";
 
                 using (var cmd = new OracleCommand(query, conn))
                 {

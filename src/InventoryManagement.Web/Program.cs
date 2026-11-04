@@ -24,9 +24,11 @@ var connectionString = builder.Configuration.GetConnectionString("InventoryManag
 
 //Injeção das dependências
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IProductService, ProductService>();
 
 //Inicialização das interfaces com a connectionString
 builder.Services.AddScoped<IUserRepository, UserRepository>(u => new UserRepository(connectionString!));
+builder.Services.AddScoped<IProductRepository, ProductRepository>(p => new ProductRepository(connectionString!));
 
 var app = builder.Build();
 
@@ -50,6 +52,5 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
-
 
 app.Run();

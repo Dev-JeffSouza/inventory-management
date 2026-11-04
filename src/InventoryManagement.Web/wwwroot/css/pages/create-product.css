@@ -83,4 +83,3 @@
 .product-form .form-group:has(button[type="submit"]) {
     grid-column: 1 / -1;
 }
-

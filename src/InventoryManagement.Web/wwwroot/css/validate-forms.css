@@ -1,0 +1,6 @@
+﻿
+form .input-error,
+formselect.input-error {
+    border-color: #f87171 !important; 
+    box-shadow: 0 0 0 2px rgba(248, 113, 113, 0.12) !important; 
+}
