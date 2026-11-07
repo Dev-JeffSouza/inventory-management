@@ -1,0 +1,59 @@
+﻿@model IList<InventoryManagement.Web.Models.Product.ListViewModel>
+
+@{
+    ViewData["Title"] = "Produtos";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/pages/list-product.css" />
+}
+
+
+<div class="container-listproduct">
+    <div class="container-btn">
+        <a href="#" class="btn-register">Novo</a>
+    </div>
+    
+    <table class="table-listproduct">
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Descrição</th>
+                <th>Volume</th>
+                <th>Custo</th>
+                <th>Estoque</th>
+                <th>Local de Estoque</th>
+                <th>Fornecedor</th>
+                <th>Marca</th>
+                <th>Preço</th>
+                <th>Cadastro</th>
+                <th>Alteração</th>
+                <th>Ativo</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var product in Model)
+            {
+                <tr>
+                    <td>@product.CodProd</td>
+                    <td>@product.Description</td>
+                    <td>@product.DescrVol</td>
+                    <td>@product.Cost</td>
+                    <td>@product.Quantity</td>
+                    <td>@product.Local</td>
+                    <td>@product.Supplier</td>
+                    <td>@product.Mark</td>
+                    <td>@product.Price</td>
+                    <td>@product.DhCad</td>
+                    <td>@product.DhAlter</td>
+                    <td>@product.Active</td>
+                    <td id="col-edit"><a href="#" class="btn-edit">Editar</a></td>
+                </tr>
+            }
+      
+        </tbody>
+    </table>
+
+</div>

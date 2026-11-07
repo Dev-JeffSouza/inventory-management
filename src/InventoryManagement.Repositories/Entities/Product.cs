@@ -21,7 +21,7 @@ namespace InventoryManagement.Repositories.Entities
 
         //Relacionamentos
 
-        public Volume? volume { get; set; } 
+        public Volume? Volume { get; set; } 
 
         public ICollection<Stock>? Stock { get; set; } = [];
 

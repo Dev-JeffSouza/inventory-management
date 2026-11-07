@@ -4,12 +4,14 @@ using InventoryManagement.Services.Models.Location;
 using InventoryManagement.Services.Models.Partner;
 using InventoryManagement.Services.Models.Product;
 using InventoryManagement.Services.Models.Volume;
+using System.Collections.Generic;
 
 namespace InventoryManagement.Services
 {
     public interface IProductService
     {
         CreateProductResult Create(CreateProductRequest request);
+        IList<ProductResult> List();
         IList<VolumeResult> GetVolume();
         IList<PartnerResult> GetPartner();
         IList<LocationResult> GetLocation();
@@ -69,6 +71,15 @@ namespace InventoryManagement.Services
         {
             var locationList = _productRepository.GetLocation();
             var listResult = locationList.Select(l => l.MapToProductLocationResult()).ToList();
+            return listResult;
+        }
+
+        //Obtendo a lista completa de produtos do banco de dados
+
+        public IList<ProductResult> List()
+        {
+            var productList = _productRepository.List();
+            var listResult = productList.MapToListProductResult();
             return listResult;
         }
 

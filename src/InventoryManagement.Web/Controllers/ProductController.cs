@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace InventoryManagement.Web.Controllers
 {
     [Authorize]
+    //[ValidateAntiForgeryToken]
     public class ProductController : Controller
     {
         public readonly IProductService _productService;
@@ -48,8 +49,16 @@ namespace InventoryManagement.Web.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("Index", "Home"); //PROVISÓRIO, AINDA NÃO EXISTE UMA PÁGINA DE LISTAGEM DE PRODUTOS
+            return RedirectToAction("List", "Product"); 
 
+        }
+
+        [Route("list")]
+        public IActionResult List()
+        {   
+            var listResult = _productService.List();
+            var result = listResult.Select(p => p.MapToProductListViewModel()).ToList();
+            return View(result);
         }
 
         private List<SelectListItem> GetVolume()

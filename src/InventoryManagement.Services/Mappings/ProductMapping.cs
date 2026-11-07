@@ -73,5 +73,31 @@ namespace InventoryManagement.Services.Mappings
             };
         }
 
+        public static IList<ProductResult> MapToListProductResult(this IEnumerable<Product> products)
+        {
+            return (from model in products
+
+                    let stocks = model.Stock?.Any() == true ? model.Stock : [new Stock { Quantity = 0, Active = "S", StockMax = 0 , StockMin = 0 }]
+                    let suppliers = model.Supplier?.Any() == true ? model.Supplier : [new Supplier { Cost = 0 }]
+
+                    from stock in stocks
+                    from supplier in suppliers
+                    select new ProductResult
+                    {
+                        CodProd = model.CodProd,
+                        Description = model.Description,
+                        DescrVol = model.Volume!.DescrVol, 
+                        Cost = supplier.Cost,
+                        Quantity = stock.Quantity,
+                        Local = stock.Location!.Description,
+                        Supplier = supplier.Partner!.NameParc,
+                        Mark = model.Mark ?? "SEM MARCA",
+                        Price = model.Price,
+                        DhCad = model.DhCad,
+                        DhAlter = model.Dhalter ?? null, 
+                        Active = model.Active ?? "SIM"
+                    }).ToList();
+        }
+
     }
 }

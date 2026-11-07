@@ -1,0 +1,90 @@
+﻿
+
+.container-listproduct {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 24px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    -webkit-overflow-scrolling: touch;
+    overflow-x: auto;
+}
+
+.table-listproduct {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+    .table-listproduct th {
+        background-color: #0056b3;
+        color: #ffffff;
+        text-align: left;
+        padding: 12px 10px;
+        font-weight: bold;
+    }
+
+    .table-listproduct td {
+        text-align: justify;
+        padding: 12px 15px;
+        border-bottom: 1px solid #e0e0e0;
+        color: #333333;
+    }
+
+    .table-listproduct tbody tr:nth-child(even) {
+        background-color: #f8f9fa;
+    }
+
+    .table-listproduct tbody tr:hover {
+        background-color: #f1f3f5;
+    }
+
+.container-btn {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.btn-register {
+    width: fit-content;
+    padding: 10px;
+    background-color: #0056b3;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+    .btn-register:hover {
+        background-color: #1d4ed8;
+    }
+
+.btn-edit {
+    width: fit-content;
+    background-color: #0056b3;
+    color: #fff;
+    text-decoration: none;
+    padding: 6px;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+    .btn-edit:hover {
+        background-color: #1d4ed8;
+    }
+
+    #col-edit {
+        text-align: center;
+        padding: 5px
+    }

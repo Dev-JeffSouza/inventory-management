@@ -21,6 +21,25 @@ namespace InventoryManagement.Web.Mappings
                 StockMax = (decimal)model.StockMax!
             };
         }
+
+        public static ListViewModel MapToProductListViewModel(this ProductResult model)
+        {
+            return new ListViewModel
+            {
+                CodProd = model.CodProd,
+                Description = model.Description!,
+                DescrVol = model.DescrVol!,
+                Cost = model.Cost,
+                Quantity = model.Quantity,
+                Local = model.Local!,
+                Supplier = model.Supplier!,
+                Mark = model.Mark!,
+                Price = model.Price,
+                DhCad = model.DhCad,
+                DhAlter = model.DhAlter,
+                Active = model.Active!
+            };
+        }
     }
 }
 
