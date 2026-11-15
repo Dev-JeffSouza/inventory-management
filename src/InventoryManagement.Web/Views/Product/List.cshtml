@@ -6,8 +6,8 @@
 
 @section Styles {
     <link rel="stylesheet" href="~/css/pages/list-product.css" />
+    <lik rel="stylesheet" href="~/css/pages/modal.css" />
 }
-
 
 <div class="container-listproduct">
     <div class="container-btn">
@@ -34,6 +34,7 @@
         </thead>
 
         <tbody>
+
             @foreach (var product in Model)
             {
                 <tr>
@@ -49,7 +50,16 @@
                     <td>@product.DhCad</td>
                     <td>@product.DhAlter</td>
                     <td>@product.Active</td>
-                    <td id="col-edit"><a href="#" class="btn-edit">Editar</a></td>
+                    <td id="col-edit">
+                        <a class="btn-edit"
+                           asp-controller="Product"
+                           asp-action="Edit"
+                           asp-route-id="@product.CodProd"
+                           asp-route-idloc="@product.CodLocal"
+                           asp-route-idsup="@product.CodSuplier">
+                            Editar
+                        </a>
+                    </td>
                 </tr>
             }
       
@@ -57,3 +67,7 @@
     </table>
 
 </div>
+
+
+
+

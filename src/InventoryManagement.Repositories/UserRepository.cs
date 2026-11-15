@@ -29,6 +29,7 @@ namespace InventoryManagement.Repositories
 
                 using (var cmd = new OracleCommand(query, conn))
                 {
+                    cmd.BindByName = true;
                     cmd.Parameters.Add(new OracleParameter(":LOGIN", Login.Trim()));
                     conn.Open();
 
@@ -38,12 +39,12 @@ namespace InventoryManagement.Repositories
                         {
                             user = new User
                             {
-                                CodUsu = reader.GetInt32(reader.GetOrdinal("CODUSU")),
-                                UserName = reader.GetString(reader.GetOrdinal("NOMEUSU")),
-                                Email = reader.GetString(reader.GetOrdinal("EMAIL")),
-                                Password = reader.GetString(reader.GetOrdinal("SENHA")),
-                                Active = reader.GetString(reader.GetOrdinal("ATIVO")),
-                                Login = reader.GetString(reader.GetOrdinal("LOGIN"))
+                                CodUsu = Convert.ToInt32(reader["CODUSU"]),
+                                UserName = reader["NOMEUSU"].ToString()!,
+                                Email = reader["EMAIL"].ToString()!,
+                                Password = reader["SENHA"].ToString()!,
+                                Active = reader["ATIVO"].ToString()!,
+                                Login = reader["LOGIN"].ToString()!,
                             };
                         }
                     }

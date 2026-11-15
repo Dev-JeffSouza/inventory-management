@@ -7,13 +7,19 @@ namespace InventoryManagement.Web.Models.Product
         public int CodProd { get; set; }
         public required string Description { get; set; }
 
+        public int CodVol { get; set; }
+
         public required string DescrVol { get; set; }
 
         public required decimal Cost { get; set; }
 
         public required decimal Quantity { get; set; }
 
+        public int CodLocal { get; set; }
+
         public required string Local { get; set; }
+
+        public int CodSuplier { get; set; }
 
         public required string Supplier { get; set; }
 

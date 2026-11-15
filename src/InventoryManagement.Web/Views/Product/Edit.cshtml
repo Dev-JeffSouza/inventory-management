@@ -1,0 +1,88 @@
+﻿
+@model InventoryManagement.Web.Models.Product.EditViewModel
+
+@{
+    ViewData["Title"] = "Editar Produto";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/pages/edit-product .css" />
+    <link rel="stylesheet" href="~/css/validate-forms.css" />
+}
+
+<div class="product-edit-container">
+    <span id="title-register">Editar Produto</span>
+
+    <form class="product-form validate-forms" novalidate asp-controller="Product" asp-action="edit">
+
+        <div class="form-group">
+            <label for="codprod">Código</label>
+            <input type="text" id="codprod" asp-for="CodProd" readonly/>
+        </div>
+
+        <div class="form-group">
+            <label for="description">Descrição</label>
+            <input type="text" id="description" required asp-for="Description" />
+        </div>
+
+        <div class="form-group">
+            <label for="slc-volume">Volume</label>
+            <select id="slc-volume" class="form-select" required asp-items="Model.Volume" asp-for="CodVol">
+                <option value="" disabled selected hidden="">Selecione</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="mark">Marca</label>
+            <input type="text" id="mark" required asp-for="Mark" />
+        </div>
+
+        <div class="form-group">
+            <label for="price">Preço</label>
+            <input type="number" id="price" required asp-for="Price" />
+        </div>
+
+        <div class="form-group">
+            <label for="slc-supplier">Fornecedor</label>
+            <select id="slc-supplier" class="form-select" required asp-items="Model.Partner" asp-for="CodParc">
+                <option value="" disabled selected hidden="">Selecione</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="cost">Custo</label>
+            <input type="number" id="cost" required asp-for="Cost" />
+        </div>
+
+        <div class="form-group">
+            <label for="stock">Estoque</label>
+            <input type="number" id="stock" required asp-for="Quantity" />
+        </div>
+
+        <div class="form-group">
+            <label for="slc-stock-location">Local de Estoque</label>
+            <select id="slc-stock-location" class="form-select" required asp-for="CodLocal" asp-items="Model.Location">
+                <option value="" disabled selected hidden="">Selecione</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="stock-min">Estoque Mínimo</label>
+            <input type="number" id="stock-min" required asp-for="StockMin" />
+        </div>
+
+        <div class="form-group">
+            <label for="stock-max">Estoque Máximo</label>
+            <input type="number" id="stock-max" required asp-for="StockMax" />
+        </div>
+
+        <div class="form-group">
+            <button type="submit">Salvar</button>
+        </div>
+
+    </form>
+</div>
+
+@section Scripts {
+    <script src="~/js/validate-forms.js"></script>
+}

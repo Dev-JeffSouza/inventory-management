@@ -6,6 +6,7 @@
     <title>@ViewData["Title"] - Gestor de Estoque</title>
 
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/pages/modal.css" />
 
     @await RenderSectionAsync("Styles", required: false)
 </head>
@@ -90,6 +91,9 @@
     </div>
 
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/modal.js"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
+    @await Html.PartialAsync("_ModalError")
 </body>
 </html>

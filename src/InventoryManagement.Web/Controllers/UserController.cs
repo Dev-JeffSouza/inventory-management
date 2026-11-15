@@ -8,7 +8,7 @@ using System.Security.Claims;
 namespace InventoryManagement.Web.Controllers
 {
     public class UserController : Controller
-    {
+    {   
         private readonly IUserService _userService;
 
         public UserController(IUserService userService)

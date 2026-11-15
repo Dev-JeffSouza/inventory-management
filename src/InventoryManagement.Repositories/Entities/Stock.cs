@@ -14,7 +14,7 @@ namespace InventoryManagement.Repositories.Entities
 
         public required decimal StockMax { get; set; }
 
-        public required string Active { get; set; }
+        public required string? Active { get; set; }
 
         public Location? Location { get; set; }
     }

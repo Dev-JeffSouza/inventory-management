@@ -77,7 +77,7 @@ namespace InventoryManagement.Services.Mappings
         {
             return (from model in products
 
-                    let stocks = model.Stock?.Any() == true ? model.Stock : [new Stock { Quantity = 0, Active = "S", StockMax = 0 , StockMin = 0 }]
+                    let stocks = model.Stock?.Any() == true ? model.Stock : [new Stock { Quantity = 0, Active = "N", StockMax = 0 , StockMin = 0 }]
                     let suppliers = model.Supplier?.Any() == true ? model.Supplier : [new Supplier { Cost = 0 }]
 
                     from stock in stocks
@@ -86,18 +86,78 @@ namespace InventoryManagement.Services.Mappings
                     {
                         CodProd = model.CodProd,
                         Description = model.Description,
+                        CodVol = model.Codvol,
                         DescrVol = model.Volume!.DescrVol, 
                         Cost = supplier.Cost,
                         Quantity = stock.Quantity,
+                        StockMin = stock.StockMin,
+                        StockMax = stock.StockMax,
+                        CodLocal = stock.Codlocal,
                         Local = stock.Location!.Description,
                         Supplier = supplier.Partner!.NameParc,
-                        Mark = model.Mark ?? "SEM MARCA",
+                        CodSuplier = supplier.CodParc,
+                        Mark = model.Mark,
                         Price = model.Price,
                         DhCad = model.DhCad,
                         DhAlter = model.Dhalter ?? null, 
-                        Active = model.Active ?? "SIM"
+                        Active = model.Active
                     }).ToList();
         }
 
+        public static Product MapToProduct(this EditProductRequest model)
+        {
+            var product = new Product
+            {
+                CodProd = model.CodProd,
+                Description = model.Description,
+                Codvol = model.CodVol,
+                Mark = model.Mark,
+                Price = model.Price,
+                Active = model.Active,
+                DhCad = DateTime.Now,
+
+                Stock = new List<Stock>
+                {
+                    new Stock
+                    {   Codlocal = model.CodLocal,
+                        Quantity = model.Quantity,
+                        StockMin = model.StockMin,
+                        StockMax = model.StockMax,
+                        Active = model.Active,
+                    }
+                },
+
+                Supplier = new List<Supplier>
+                {
+                    new Supplier
+                    {
+                        Cost = model.Cost
+                    }
+                }
+            };
+            return product;
+        }
+
+        public static ProductResult MapToProductResult(this Product product)
+        {
+            return new ProductResult
+            {
+                CodProd = product.CodProd,
+                Description = product.Description,
+                DescrVol = product.Volume?.DescrVol,
+                CodVol = product.Codvol,
+                CodLocal = product.Stock!.FirstOrDefault()!.Codlocal,
+                Local = product.Stock?.FirstOrDefault()?.Location?.Description,
+                DhCad = product.DhCad,
+                Mark = product.Mark,
+                Active = product.Active,
+                Price = product.Price,
+                Quantity = product.Stock?.FirstOrDefault()?.Quantity ?? 0,
+                StockMin = product.Stock?.FirstOrDefault()?.StockMin ?? 0,
+                StockMax = product.Stock?.FirstOrDefault()?.StockMax ?? 0,
+                Supplier = null,
+                Cost = product.Supplier?.FirstOrDefault()?.Cost ?? 0
+            };
+        }
     }
 }

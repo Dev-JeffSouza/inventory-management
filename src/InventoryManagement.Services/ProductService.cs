@@ -4,17 +4,26 @@ using InventoryManagement.Services.Models.Location;
 using InventoryManagement.Services.Models.Partner;
 using InventoryManagement.Services.Models.Product;
 using InventoryManagement.Services.Models.Volume;
-using System.Collections.Generic;
+
 
 namespace InventoryManagement.Services
 {
     public interface IProductService
     {
         CreateProductResult Create(CreateProductRequest request);
+
+        EditProductResult Edit(EditProductRequest request);
+
+        ProductResult? GetById(int codProd, int idLoc, int idForn);
+
         IList<ProductResult> List();
+
         IList<VolumeResult> GetVolume();
+
         IList<PartnerResult> GetPartner();
+
         IList<LocationResult> GetLocation();
+
     }
 
     public class ProductService : IProductService
@@ -26,8 +35,6 @@ namespace InventoryManagement.Services
         {
             _productRepository = productRepository;
         }
-
-        //Método para criar produto
 
         public CreateProductResult Create(CreateProductRequest request)
         {
@@ -45,7 +52,29 @@ namespace InventoryManagement.Services
             return result;
         }
 
-        //Obtendo a lista de volumes do banco de dados
+
+        public EditProductResult Edit(EditProductRequest request)
+        {
+            var result = new EditProductResult();
+           
+            var existingProduct = _productRepository.GetById(request.CodProd, request.CodLocal, request.Supplier);
+
+            if (existingProduct == null)
+            {
+                result.ErroMenssage = "Produto não encontrado na base de dados.";
+                return result;
+            }
+
+            var affectedRows = _productRepository.Update(request.MapToProduct());
+            if (affectedRows == 0)
+            {
+                result.ErroMenssage = "Erro ao editar o produto.";
+                return result;
+            }
+
+            result.Sucess = true;
+            return result;
+        }
 
         public IList<VolumeResult> GetVolume()
         {
@@ -55,8 +84,6 @@ namespace InventoryManagement.Services
             return listResult;
         }
 
-        //Obtendo a lista de parceiros do banco de dados
-
         public IList<PartnerResult> GetPartner()
         {
             var partnerList = _productRepository.GetPartner();
@@ -65,8 +92,6 @@ namespace InventoryManagement.Services
             return listResult;
         }
 
-        //Obtendo a lista de locais do banco de dados
-
         public IList<LocationResult> GetLocation()
         {
             var locationList = _productRepository.GetLocation();
@@ -74,13 +99,24 @@ namespace InventoryManagement.Services
             return listResult;
         }
 
-        //Obtendo a lista completa de produtos do banco de dados
-
         public IList<ProductResult> List()
         {
             var productList = _productRepository.List();
             var listResult = productList.MapToListProductResult();
             return listResult;
+        }
+
+        public ProductResult? GetById(int codProd, int idloc, int idsup)
+        {
+            var product = _productRepository.GetById(codProd, idloc, idsup);
+
+            if (product == null)
+            {
+                return null;
+            }
+
+            var result = product.MapToProductResult();
+            return result;
         }
 
     };

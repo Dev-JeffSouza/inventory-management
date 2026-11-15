@@ -7,8 +7,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace InventoryManagement.Web.Controllers
 {
+    [Route("product")]
     [Authorize]
-    //[ValidateAntiForgeryToken]
+
     public class ProductController : Controller
     {
         public readonly IProductService _productService;
@@ -18,7 +19,7 @@ namespace InventoryManagement.Web.Controllers
             _productService = productService;
         }
 
-
+        //Criar
         [Route("create")]
         public IActionResult Create()
         {
@@ -53,12 +54,56 @@ namespace InventoryManagement.Web.Controllers
 
         }
 
+        //Listar
         [Route("list")]
         public IActionResult List()
         {   
             var listResult = _productService.List();
             var result = listResult.Select(p => p.MapToProductListViewModel()).ToList();
             return View(result);
+        }
+
+        //Editar
+
+        [Route("edit/{id}/{idloc}/{idsup}")]
+        public IActionResult Edit (int id, int idloc, int idsup)
+        {
+            var product = _productService.GetById(id, idloc, idsup);
+
+            if (product == null)
+            {
+                TempData["ErrorMessage"] = "Não foi possível encontrar o produto.";
+                return RedirectToAction("List", "Product");
+            }
+
+            //Depois, criar aqui uma chamada pra trazer as informações originalmente já vinculadas no banco
+            var model = product!.MapToEditViewModel();
+            model.Volume = GetVolume();
+            model.Partner = GetPartner();
+            model.Location = GetLocation();
+
+            return View(model);
+        }
+
+        [Route("edit/{id}")]
+        [HttpPost]
+        public IActionResult Edit(EditViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var request = model.MapToProductRequest();
+            var result = _productService.Edit(request);
+
+            if (!result.Sucess)
+            {
+                ModelState.AddModelError(string.Empty, result.ErroMenssage!);
+                return View(model);
+            }
+
+            return RedirectToAction("List","Product");
         }
 
         private List<SelectListItem> GetVolume()
