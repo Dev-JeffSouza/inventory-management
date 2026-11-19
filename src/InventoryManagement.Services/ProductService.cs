@@ -57,7 +57,7 @@ namespace InventoryManagement.Services
         {
             var result = new EditProductResult();
            
-            var existingProduct = _productRepository.GetById(request.CodProd, request.CodLocal, request.Supplier);
+            var existingProduct = _productRepository.GetById(request.CodProd, request.CodLocal, request.CodSupplier);
 
             if (existingProduct == null)
             {

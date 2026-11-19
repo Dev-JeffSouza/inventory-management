@@ -114,23 +114,27 @@ namespace InventoryManagement.Services.Mappings
                 Mark = model.Mark,
                 Price = model.Price,
                 Active = model.Active,
-                DhCad = DateTime.Now,
+                DhCad = DateTime.Now, 
 
                 Stock = new List<Stock>
                 {
                     new Stock
-                    {   Codlocal = model.CodLocal,
+                    {   
+                        Codprod = model.CodProd,
+                        Codlocal = model.CodLocal,
                         Quantity = model.Quantity,
                         StockMin = model.StockMin,
                         StockMax = model.StockMax,
-                        Active = model.Active,
+                        Active = 'S'.ToString() //Depois rever essa linha, pra fazer sentido dentro da lógica de transferência de locais.
                     }
                 },
 
                 Supplier = new List<Supplier>
                 {
                     new Supplier
-                    {
+
+                    {   CodProd = model.CodProd,
+                        CodParc = model.CodSupplier,
                         Cost = model.Cost
                     }
                 }

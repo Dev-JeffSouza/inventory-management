@@ -50,9 +50,9 @@ namespace InventoryManagement.Repositories
                             cmdProduct.Transaction = transaction;
                             cmdProduct.BindByName = true;
 
-                            cmdProduct.Parameters.Add(new OracleParameter(":DESCRPROD", product.Description));
+                            cmdProduct.Parameters.Add(new OracleParameter(":DESCRPROD", product.Description.ToUpper()));
                             cmdProduct.Parameters.Add(new OracleParameter(":CODVOL", product.Codvol));
-                            cmdProduct.Parameters.Add(new OracleParameter(":MARCA", product.Mark));
+                            cmdProduct.Parameters.Add(new OracleParameter(":MARCA", product.Mark.ToUpper()));
                             cmdProduct.Parameters.Add(new OracleParameter(":PRECO", product.Price));
                             cmdProduct.Parameters.Add(new OracleParameter(":ATIVO", product.Active));
                             cmdProduct.Parameters.Add(new OracleParameter(":DHCAD", product.DhCad));
@@ -145,11 +145,11 @@ namespace InventoryManagement.Repositories
                     try
                     {
                         string productQuery = @"UPDATE PRODUTO SET                                         
-                                        DESCRPROD = NVL(:DESCRIPTION, DESCRPROD),                                        
+                                        DESCRPROD = NVL(:DESCRIPTION,'SEM DESCRIÇÃO'),                                        
                                         CODVOL    = NVL(:CODVOL, CODVOL),                                        
-                                        MARCA     = NVL(:MARK, MARCA),                                        
-                                        PRECO     = NVL(:PRICE, PRECO),                                        
-                                        ATIVO     = NVL(:ACTIVE, ATIVO)                                      
+                                        MARCA     = NVL(:MARK,'SEM MARCA'),                                        
+                                        PRECO     = NVL(:PRICE, 0),                                        
+                                        ATIVO     = NVL(:ACTIVE,'S')                                      
                                       WHERE CODPROD = :CODPROD";
 
                         using (var cmdProduct = new OracleCommand(productQuery, conn))
@@ -157,11 +157,11 @@ namespace InventoryManagement.Repositories
                             cmdProduct.Transaction = transaction;
                             cmdProduct.BindByName = true;
 
-                            cmdProduct.Parameters.Add(new OracleParameter(":DESCRIPTION", (object?)product.Description ?? DBNull.Value));
-                            cmdProduct.Parameters.Add(new OracleParameter(":CODVOL", (object?)product.Codvol ?? DBNull.Value));
-                            cmdProduct.Parameters.Add(new OracleParameter(":MARK", (object?)product.Mark ?? DBNull.Value)); 
-                            cmdProduct.Parameters.Add(new OracleParameter(":PRECO", (object?)product.Price ?? DBNull.Value));
-                            cmdProduct.Parameters.Add(new OracleParameter(":ACTIVE", (object?)product.Active ?? DBNull.Value));
+                            cmdProduct.Parameters.Add(new OracleParameter(":DESCRIPTION", product.Description.ToUpper()));
+                            cmdProduct.Parameters.Add(new OracleParameter(":CODVOL", product.Codvol));
+                            cmdProduct.Parameters.Add(new OracleParameter(":MARK", product.Mark)); 
+                            cmdProduct.Parameters.Add(new OracleParameter(":PRICE", product.Price));
+                            cmdProduct.Parameters.Add(new OracleParameter(":ACTIVE", product.Active.ToUpper()));
                             cmdProduct.Parameters.Add(new OracleParameter(":CODPROD", product.CodProd));
 
                             affectedRows = cmdProduct.ExecuteNonQuery();
@@ -170,28 +170,29 @@ namespace InventoryManagement.Repositories
                         if (product.Stock != null && product.Stock.Count > 0)
                         {
                             string stockQuery = @"UPDATE ESTOQUE SET                                                
-                                                    QUANTIDADE = NVL(:QUANTIDADE, QUANTIDADE),                                                
-                                                    ESTMIN = NVL(:ESTOCKMIN, ESTMIN),                                                
-                                                    ESTMAX = NVL(:ESTOCKMAX, ESTMAX),                                                
-                                                    ATIVO = NVL(:ACTIVE, ATIVO)                                             
+                                                    QUANTIDADE = NVL(:QUANTIDADE, 0),                                                
+                                                    ESTMIN = NVL(:ESTOCKMIN, 0),                                                
+                                                    ESTMAX = NVL(:ESTOCKMAX, 0),                                                
+                                                    ATIVO = NVL(:ACTIVE,'S')                                             
                                                  WHERE CODPROD = :CODPROD AND CODLOCAL = :CODLOCAL";
 
                             string stockQueryInsert = @"INSERT INTO ESTOQUE (CODPROD, CODLOCAL, QUANTIDADE, ESTMIN, ESTMAX, ATIVO)                                                 
                                                         VALUES (:CODPROD, NVL(:CODLOCAL, 1), NVL(:QUANTITY, 0), NVL(:ESTOCKMIN, 0),                                                         
-                                                        NVL(:ESTOCKMAX, 0), NVL(:ACTIVE, 'S'))";
+                                                        NVL(:ESTOCKMAX, 0), NVL(:ACTIVE,'S'))";
 
                             foreach (var stock in product.Stock)
                             {
                                 using (var cmdStock = new OracleCommand(stockQuery, conn))
                                 {
                                     cmdStock.Transaction = transaction;
+                                    cmdStock.BindByName = true;
 
                                     cmdStock.Parameters.Add(new OracleParameter(":CODPROD", product.CodProd));
                                     cmdStock.Parameters.Add(new OracleParameter(":CODLOCAL", stock.Codlocal));
-                                    cmdStock.Parameters.Add(new OracleParameter(":QUANTIDADE", (object?)stock.Quantity ?? DBNull.Value));
-                                    cmdStock.Parameters.Add(new OracleParameter(":ESTOCKMIN", (object?)stock.StockMin ?? DBNull.Value));
-                                    cmdStock.Parameters.Add(new OracleParameter(":ESTOCKMAX", (object?)stock.StockMax ?? DBNull.Value));
-                                    cmdStock.Parameters.Add(new OracleParameter(":ACTIVE", (object?)stock.Active ?? DBNull.Value));
+                                    cmdStock.Parameters.Add(new OracleParameter(":QUANTIDADE", stock.Quantity));
+                                    cmdStock.Parameters.Add(new OracleParameter(":ESTOCKMIN", stock.StockMin));
+                                    cmdStock.Parameters.Add(new OracleParameter(":ESTOCKMAX", stock.StockMax));
+                                    cmdStock.Parameters.Add(new OracleParameter(":ACTIVE", 'S'.ToString()));
 
                                     affectedRows = cmdStock.ExecuteNonQuery();
 
@@ -200,6 +201,7 @@ namespace InventoryManagement.Repositories
                                         using (var cmdInsert = new OracleCommand(stockQueryInsert, conn))
                                         {
                                             cmdInsert.Transaction = transaction;
+                                            cmdInsert.BindByName = true;
 
                                             cmdInsert.Parameters.Add(new OracleParameter(":CODPROD", product.CodProd));
                                             cmdInsert.Parameters.Add(new OracleParameter(":CODLOCAL", (object?)stock.Codlocal ?? DBNull.Value));
@@ -218,7 +220,7 @@ namespace InventoryManagement.Repositories
                         if (product.Supplier != null && product.Supplier.Count > 0)
                         {
                             string supplierQuery = @"UPDATE FORNECEDOR SET                                                
-                                                     CUSTO = NVL(:COST, CUSTO)                                              
+                                                     CUSTO = NVL(:COST, 0)                                              
                                                     WHERE CODPROD = :CODPROD AND CODPARC = :CODPARC"; 
 
                             string supplierQueryInsert = @"INSERT INTO FORNECEDOR (CODPROD, CODPARC, CUSTO)                                                 
@@ -229,10 +231,11 @@ namespace InventoryManagement.Repositories
                                 using (var cmdSupplier = new OracleCommand(supplierQuery, conn))
                                 {
                                     cmdSupplier.Transaction = transaction;
+                                    cmdSupplier.BindByName = true;
 
                                     cmdSupplier.Parameters.Add(new OracleParameter(":CODPROD", product.CodProd));
                                     cmdSupplier.Parameters.Add(new OracleParameter(":CODPARC", supplier.CodParc));
-                                    cmdSupplier.Parameters.Add(new OracleParameter(":COST", (object?)supplier.Cost ?? DBNull.Value));
+                                    cmdSupplier.Parameters.Add(new OracleParameter(":COST",supplier.Cost));
 
                                     affectedRows = cmdSupplier.ExecuteNonQuery();
 
@@ -241,10 +244,11 @@ namespace InventoryManagement.Repositories
                                         using (var cmdInsertSup = new OracleCommand(supplierQueryInsert, conn))
                                         {
                                             cmdInsertSup.Transaction = transaction;
-
+                                            cmdInsertSup.BindByName = true;
+   
                                             cmdInsertSup.Parameters.Add(new OracleParameter(":CODPROD", product.CodProd)); 
                                             cmdInsertSup.Parameters.Add(new OracleParameter(":CODPARC", supplier.CodParc));
-                                            cmdInsertSup.Parameters.Add(new OracleParameter(":CUSTO", (object?)supplier.Cost ?? DBNull.Value));
+                                            cmdInsertSup.Parameters.Add(new OracleParameter(":CUSTO", supplier.Cost));
 
                                             cmdInsertSup.ExecuteNonQuery();
                                         }
@@ -275,7 +279,7 @@ namespace InventoryManagement.Repositories
                                     PRO.CODPROD, 
                                     PRO.DESCRPROD, 
                                     PRO.MARCA,   
-                                    PRO.ATIVO, 
+                                    DECODE(PRO.ATIVO,'S','SIM','N','NÃO') AS ATIVO,
                                     PRO.PRECO, 
                                     PRO.DHCAD, 
                                     NVL(FORN.CUSTO, 0) AS CUSTO, 
@@ -283,10 +287,10 @@ namespace InventoryManagement.Repositories
                                     NVL(EST.ESTMIN, 0) AS ESTMIN, 
                                     NVL(EST.ESTMAX, 0) AS ESTMAX
                                 FROM PRODUTO PRO
-                                JOIN FORNECEDOR FORN 
+                                LEFT JOIN FORNECEDOR FORN 
                                    ON FORN.CODPROD = PRO.CODPROD 
                                    AND FORN.CODPARC = :CODPARC
-                                JOIN ESTOQUE EST 
+                                LEFT JOIN ESTOQUE EST 
                                    ON EST.CODPROD = PRO.CODPROD AND EST.CODLOCAL = :CODLOCAL
                                 WHERE
                                     PRO.CODPROD = :CODPROD";
@@ -452,7 +456,7 @@ namespace InventoryManagement.Repositories
                                     PRO.PRECO, 
                                     PRO.DHCAD, 
                                     PRO.DHALTER, 
-                                    DECODE(PRO.ATIVO,'S','SIM') AS ATIVO
+                                    DECODE(PRO.ATIVO,'S','SIM','N','NÃO') AS ATIVO
                                 FROM PRODUTO PRO
                                 JOIN ESTOQUE EST ON EST.CODPROD = PRO.CODPROD
                                 JOIN LOCAL LOC ON LOC.CODLOCAL = EST.CODLOCAL
@@ -488,6 +492,7 @@ namespace InventoryManagement.Repositories
                                 Supplier = new List<Supplier>
                                 {
                                     new Supplier
+
                                     {   CodProd = Convert.ToInt32(reader["CODPROD"]),
                                         CodParc = Convert.ToInt32(reader["CODPARC"]),
                                         Cost = reader["CUSTO"] != DBNull.Value ? Convert.ToDecimal(reader["CUSTO"]) : 0,

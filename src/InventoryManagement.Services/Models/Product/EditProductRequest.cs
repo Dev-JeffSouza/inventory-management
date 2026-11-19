@@ -18,7 +18,7 @@ namespace InventoryManagement.Services.Models.Product
 
         public int CodLocal { get; set; }
 
-        public int Supplier { get; set; }
+        public int CodSupplier { get; set; }
 
         public required string Mark { get; set; }
 

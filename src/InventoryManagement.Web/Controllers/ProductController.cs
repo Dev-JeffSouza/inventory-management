@@ -1,4 +1,5 @@
-﻿using InventoryManagement.Services;
+﻿using InventoryManagement.Repositories.Entities;
+using InventoryManagement.Services;
 using InventoryManagement.Web.Mappings;
 using InventoryManagement.Web.Models.Product;
 using Microsoft.AspNetCore.Authorization;
@@ -38,7 +39,11 @@ namespace InventoryManagement.Web.Controllers
         public IActionResult Create (CreateViewModel model)
         {
             if (!ModelState.IsValid)
-            {
+            {   //DEPOIS ALTERAR PRA LoadSelects
+                model.Volume = GetVolume();
+                model.Partner = GetPartner();
+                model.Location = GetLocation();
+
                 return View(model);
             }
 
@@ -49,6 +54,7 @@ namespace InventoryManagement.Web.Controllers
                 ModelState.AddModelError(string.Empty, result.ErroMenssage!);
                 return View(model);
             }
+
 
             return RedirectToAction("List", "Product"); 
 
@@ -66,6 +72,7 @@ namespace InventoryManagement.Web.Controllers
         //Editar
 
         [Route("edit/{id}/{idloc}/{idsup}")]
+        [HttpGet]
         public IActionResult Edit (int id, int idloc, int idsup)
         {
             var product = _productService.GetById(id, idloc, idsup);
@@ -78,19 +85,18 @@ namespace InventoryManagement.Web.Controllers
 
             //Depois, criar aqui uma chamada pra trazer as informações originalmente já vinculadas no banco
             var model = product!.MapToEditViewModel();
-            model.Volume = GetVolume();
-            model.Partner = GetPartner();
-            model.Location = GetLocation();
+            LoadSelects();
 
             return View(model);
         }
 
-        [Route("edit/{id}")]
+        [Route("edit/{id}/{idloc}/{idsup}")]
         [HttpPost]
         public IActionResult Edit(EditViewModel model)
         {
             if (!ModelState.IsValid)
             {
+                LoadSelects();
                 return View(model);
             }
 
@@ -99,7 +105,8 @@ namespace InventoryManagement.Web.Controllers
 
             if (!result.Sucess)
             {
-                ModelState.AddModelError(string.Empty, result.ErroMenssage!);
+                TempData["ErrorMessage"] = result.ErroMenssage;
+                LoadSelects();
                 return View(model);
             }
 
@@ -139,6 +146,13 @@ namespace InventoryManagement.Web.Controllers
                 Text = l.Description
             }).ToList();
             return locations;
+        }
+
+        private void LoadSelects ()
+        {
+            ViewBag.Volume = GetVolume();
+            ViewBag.Partner = GetPartner();
+            ViewBag.Location = GetLocation();
         }
 
 

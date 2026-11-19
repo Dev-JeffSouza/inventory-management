@@ -40,13 +40,21 @@
         color: #4b5563;
     }
 
-    .form-group #codprod:disabled {
-        background-color: #f8f9fa; 
-        color: #495057; 
-        border-color: #ced4da; 
-        opacity: 1; 
+    .form-group #codprod:read-only {
+        background-color: #f8f9fa;
+        color: #495057;
+        border-color: #ced4da;
+        opacity: 1;
         cursor: not-allowed;
+        caret-color: transparent;
+        user-select: none; /* Opcional: impede selecionar e arrastar o texto */
     }
+
+        .form-group #codprod:read-only:focus {
+            outline: none;
+            box-shadow: none; 
+            border-color: #ced4da; 
+        }
 
     .product-form input[type="text"],
     .product-form input[type="number"],

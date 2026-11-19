@@ -56,7 +56,7 @@ namespace InventoryManagement.Web.Mappings
                 Quantity = model.Quantity,
                 StockMin = model.StockMin,
                 StockMax = model.StockMax,
-                Supplier = model.Supplier,
+                CodSupplier = model.CodSupplier,
                 Mark = model.Mark,
                 Price = model.Price,
                 Active = model.Active

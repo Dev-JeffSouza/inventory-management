@@ -16,7 +16,7 @@ namespace InventoryManagement.Web.Models.Product
 
 
         [Required(ErrorMessage = "O fornecedor é obrigatório.")]
-        public int CodParc { get; set; }
+        public int CodSupplier { get; set; }
 
 
         [Required(ErrorMessage = "O campo custo é obrigatório.")]
@@ -39,10 +39,6 @@ namespace InventoryManagement.Web.Models.Product
         public decimal StockMax { get; set; }
 
 
-        [Required(ErrorMessage = "O campo fornecedor é obrigatório.")]
-        public int Supplier { get; set; }
-
-
         [Required(ErrorMessage = "O campo marca é obrigatório.")]
         public required string Mark { get; set; }
 
@@ -54,11 +50,12 @@ namespace InventoryManagement.Web.Models.Product
         [Required(ErrorMessage = "O campo ativo é obrigatório.")]
         public required string Active { get; set; }
 
-        public List<SelectListItem>? Volume { get; set; }
+
+        /*public List<SelectListItem>? Volume { get; set; }
 
         public List<SelectListItem>? Partner { get; set; }
 
-        public List<SelectListItem>? Location { get; set; }
+        public List<SelectListItem>? Location { get; set; }*/
 
     }
 }

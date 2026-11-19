@@ -18,7 +18,7 @@ namespace InventoryManagement.Web.Models.Product
 
 
         [Required(ErrorMessage = "O preço é obrigatório.")]
-        [Range(0.01, 999999.99, ErrorMessage = "O preço deve ser maior que zero.")]
+        //[Range(0.01, 999999.99, ErrorMessage = "O preço deve ser maior que zero.")]
         public decimal Price { get; set; }
 
 
@@ -27,7 +27,7 @@ namespace InventoryManagement.Web.Models.Product
 
 
         [Required(ErrorMessage = "O custo é obrigatório.")]
-        [Range(0, 999999.99, ErrorMessage = "O custo não pode ser negativo.")]
+        //[Range(0, 999999.99, ErrorMessage = "O custo não pode ser negativo.")]
         public decimal Cost { get; set; }
 
 
