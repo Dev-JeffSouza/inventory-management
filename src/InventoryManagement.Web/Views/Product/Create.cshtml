@@ -1,7 +1,9 @@
-﻿@model InventoryManagement.Web.Models.Product.CreateViewModel
+﻿@using InventoryManagement.Web.Models.Panel
+@model InventoryManagement.Web.Models.Product.CreateViewModel
 
 @{
     ViewData["Title"] = "Cadastrar Produto";
+    ViewData["Panel"] = Panel.Produtos;
 }
 
 @section Styles {
@@ -21,7 +23,7 @@
 
         <div class="form-group">
             <label for="slc-volume">Volume</label>
-            <select id="slc-volume" class="form-select" required asp-items="Model.Volume" asp-for="Codvol">
+            <select id="slc-volume" class="form-select" required asp-items="ViewBag.Volume" asp-for="Codvol">
                 <option value="" disabled selected hidden="">Selecione</option>
             </select>
         </div>
@@ -38,7 +40,7 @@
 
         <div class="form-group">
             <label for="slc-supplier">Fornecedor</label>
-            <select id="slc-supplier" class="form-select" required asp-items="Model.Partner" asp-for="CodParc">
+            <select id="slc-supplier" class="form-select" required asp-items="ViewBag.Partner" asp-for="CodParc">
                 <option value="" disabled selected hidden="">Selecione</option>
             </select>
         </div>
@@ -55,7 +57,7 @@
 
         <div class="form-group">
             <label for="slc-stock-location">Local de Estoque</label>
-            <select id="slc-stock-location" class="form-select" required asp-for="CodLocal" asp-items="Model.Location">
+            <select id="slc-stock-location" class="form-select" required asp-for="CodLocal" asp-items="ViewBag.Location">
                 <option value="" disabled selected hidden="">Selecione</option> 
             </select>
         </div>

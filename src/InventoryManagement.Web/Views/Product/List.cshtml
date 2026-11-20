@@ -1,7 +1,9 @@
-﻿@model IList<InventoryManagement.Web.Models.Product.ListViewModel>
+﻿@using InventoryManagement.Web.Models.Panel
+@model IList<InventoryManagement.Web.Models.Product.ListViewModel>
 
 @{
     ViewData["Title"] = "Produtos";
+    ViewData["Panel"] = Panel.Produtos;
 }
 
 @section Styles {

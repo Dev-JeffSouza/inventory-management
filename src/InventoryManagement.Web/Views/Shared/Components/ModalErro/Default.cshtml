@@ -1,4 +1,6 @@
-﻿@if (TempData["ErrorMessage"] != null)
+﻿@model InventoryManagement.Web.Models.ModalErro.ModalErroViewModel
+
+@if (!string.IsNullOrWhiteSpace(Model.Msg))
 {
     <div id="modalError" class="modal-overlay">
         <div class="modal-card">
@@ -11,7 +13,7 @@
             </div>
 
             <h3 class="modal-title">Atenção</h3>
-            <p class="modal-message">@TempData["ErrorMessage"]</p>
+            <p class="modal-message">@Model.Msg</p>
 
             <button type="button" class="btn-close" onclick="CloseModal()">Fechar</button>
         </div>

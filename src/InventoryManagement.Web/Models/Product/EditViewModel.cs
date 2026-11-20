@@ -51,11 +51,5 @@ namespace InventoryManagement.Web.Models.Product
         public required string Active { get; set; }
 
 
-        /*public List<SelectListItem>? Volume { get; set; }
-
-        public List<SelectListItem>? Partner { get; set; }
-
-        public List<SelectListItem>? Location { get; set; }*/
-
     }
 }

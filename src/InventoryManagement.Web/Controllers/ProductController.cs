@@ -24,14 +24,8 @@ namespace InventoryManagement.Web.Controllers
         [Route("create")]
         public IActionResult Create()
         {
-            var model = new CreateViewModel
-            {
-                Volume = GetVolume(),
-                Partner = GetPartner(),
-                Location = GetLocation()
-            };
-
-            return View(model);
+            LoadSelects();
+            return View();
         }
 
         [Route("create")]
@@ -39,11 +33,8 @@ namespace InventoryManagement.Web.Controllers
         public IActionResult Create (CreateViewModel model)
         {
             if (!ModelState.IsValid)
-            {   //DEPOIS ALTERAR PRA LoadSelects
-                model.Volume = GetVolume();
-                model.Partner = GetPartner();
-                model.Location = GetLocation();
-
+            {  
+                LoadSelects();
                 return View(model);
             }
 
@@ -51,10 +42,10 @@ namespace InventoryManagement.Web.Controllers
 
             if (!result.Sucess)
             {
-                ModelState.AddModelError(string.Empty, result.ErroMenssage!);
+                ViewData["Erro"] = result.ErroMenssage;
+                LoadSelects();
                 return View(model);
             }
-
 
             return RedirectToAction("List", "Product"); 
 
@@ -79,7 +70,7 @@ namespace InventoryManagement.Web.Controllers
 
             if (product == null)
             {
-                TempData["ErrorMessage"] = "Não foi possível encontrar o produto.";
+                ViewData["Erro"] = "Não foi possível encontrar o produto.";
                 return RedirectToAction("List", "Product");
             }
 
@@ -105,7 +96,7 @@ namespace InventoryManagement.Web.Controllers
 
             if (!result.Sucess)
             {
-                TempData["ErrorMessage"] = result.ErroMenssage;
+                ViewData["Erro"] = result.ErroMenssage;
                 LoadSelects();
                 return View(model);
             }

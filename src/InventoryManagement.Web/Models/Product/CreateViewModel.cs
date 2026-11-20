@@ -46,13 +46,5 @@ namespace InventoryManagement.Web.Models.Product
         [Required(ErrorMessage = "O estoque máximo é obrigatório.")]
         public decimal StockMax { get; set; }
 
-
-        //Preenchimento dos inputs selects com os dados do banco de dados
-
-        public List<SelectListItem>? Volume { get; set; } = [];
-
-        public List<SelectListItem>? Partner { get; set; } = [];
-
-        public List<SelectListItem>? Location { get; set; } = [];
     }
 }
