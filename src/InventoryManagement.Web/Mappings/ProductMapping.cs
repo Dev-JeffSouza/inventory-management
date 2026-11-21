@@ -69,6 +69,9 @@ namespace InventoryManagement.Web.Mappings
             {
                 CodProd = model.CodProd,
                 Description = model.Description,
+                CodVol = model.CodVol,
+                CodSupplier = model.CodSuplier,
+                CodLocal = model.CodLocal,
                 Cost = model.Cost,
                 Quantity = model.Quantity,
                 Mark = model.Mark,

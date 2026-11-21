@@ -74,10 +74,8 @@ namespace InventoryManagement.Web.Controllers
                 return RedirectToAction("List", "Product");
             }
 
-            //Depois, criar aqui uma chamada pra trazer as informações originalmente já vinculadas no banco
             var model = product!.MapToEditViewModel();
-            LoadSelects();
-
+            LoadSelects(Codvol: model.CodVol, CodParc: model.CodSupplier, codLoc: model.CodLocal);
             return View(model);
         }
 
@@ -86,7 +84,7 @@ namespace InventoryManagement.Web.Controllers
         public IActionResult Edit(EditViewModel model)
         {
             if (!ModelState.IsValid)
-            {
+            {   //implemntar aqui a seleção padrão que vem do banco
                 LoadSelects();
                 return View(model);
             }
@@ -104,46 +102,49 @@ namespace InventoryManagement.Web.Controllers
             return RedirectToAction("List","Product");
         }
 
-        private List<SelectListItem> GetVolume()
+        private List<SelectListItem> GetVolume(int? selectedCodvol = null)
         {
             var listResult = _productService.GetVolume();
 
             var volumes = listResult.Select(v => new SelectListItem
             {
                 Value = v.Codvol.ToString(),
-                Text = v.Description
+                Text = v.Description,
+                Selected = v.Codvol == selectedCodvol
             }).ToList();
 
             return volumes;
         }
 
-        private List<SelectListItem> GetPartner()
+        private List<SelectListItem> GetPartner(int? selectedCodParc = null)
         {
             var listResult = _productService.GetPartner();
             var partners = listResult.Select(p => new SelectListItem
             {
                 Value = p.CodParc.ToString(),
-                Text = p.NameParc
+                Text = p.NameParc,
+                Selected = p.CodParc == selectedCodParc
             }).ToList();
             return partners;
         }
 
-        private List<SelectListItem> GetLocation()
+        private List<SelectListItem> GetLocation(int? selectCodLoc = null)
         {
             var listResult = _productService.GetLocation();
             var locations = listResult.Select(l => new SelectListItem
             {
                 Value = l.CodLocal.ToString(),
-                Text = l.Description
+                Text = l.Description,
+                Selected = l.CodLocal == selectCodLoc
             }).ToList();
             return locations;
         }
 
-        private void LoadSelects ()
+        private void LoadSelects (int? Codvol = null, int? CodParc = null, int? codLoc = null)
         {
-            ViewBag.Volume = GetVolume();
-            ViewBag.Partner = GetPartner();
-            ViewBag.Location = GetLocation();
+            ViewBag.Volume = GetVolume(Codvol);
+            ViewBag.Partner = GetPartner(CodParc);
+            ViewBag.Location = GetLocation(codLoc);
         }
 
 

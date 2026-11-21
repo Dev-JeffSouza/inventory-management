@@ -282,10 +282,13 @@ namespace InventoryManagement.Repositories
                                     DECODE(PRO.ATIVO,'S','SIM','N','NÃO') AS ATIVO,
                                     PRO.PRECO, 
                                     PRO.DHCAD, 
+                                    PRO.CODVOL,
                                     NVL(FORN.CUSTO, 0) AS CUSTO, 
+                                    FORN.CODPARC,
                                     NVL(EST.QUANTIDADE, 0) AS QUANTIDADE, 
                                     NVL(EST.ESTMIN, 0) AS ESTMIN, 
-                                    NVL(EST.ESTMAX, 0) AS ESTMAX
+                                    NVL(EST.ESTMAX, 0) AS ESTMAX,
+                                    EST.CODLOCAL
                                 FROM PRODUTO PRO
                                 LEFT JOIN FORNECEDOR FORN 
                                    ON FORN.CODPROD = PRO.CODPROD 
@@ -310,6 +313,7 @@ namespace InventoryManagement.Repositories
                             {
                                 CodProd = Convert.ToInt32(reader["CODPROD"]),
                                 Description = reader["DESCRPROD"].ToString()!,
+                                Codvol = Convert.ToInt32(reader["CODVOL"]),
                                 Mark = reader["MARCA"].ToString()!,
                                 Price = Convert.ToDecimal(reader["PRECO"]),
                                 DhCad = Convert.ToDateTime(reader["DHCAD"]),
@@ -319,6 +323,8 @@ namespace InventoryManagement.Repositories
                                 {
                                     new Stock
                                     {
+                                        Codprod = Convert.ToInt32(reader["CODPROD"]),
+                                        Codlocal = Convert.ToInt32(reader["CODLOCAL"]),
                                         Quantity = Convert.ToDecimal(reader["QUANTIDADE"]),
                                         StockMin = Convert.ToDecimal(reader["ESTMIN"]),
                                         StockMax = Convert.ToDecimal(reader["ESTMAX"]),
@@ -329,7 +335,8 @@ namespace InventoryManagement.Repositories
                                 Supplier = new List<Supplier>
                                 {
                                     new Supplier
-                                    {
+                                    {   CodProd = Convert.ToInt32(reader["CODPROD"]),
+                                        CodParc = Convert.ToInt32(reader["CODPARC"]),
                                         Cost = Convert.ToDecimal(reader["CUSTO"])
                                     }
                                 }

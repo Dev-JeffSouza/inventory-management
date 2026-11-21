@@ -151,6 +151,7 @@ namespace InventoryManagement.Services.Mappings
                 DescrVol = product.Volume?.DescrVol,
                 CodVol = product.Codvol,
                 CodLocal = product.Stock!.FirstOrDefault()!.Codlocal,
+                CodSuplier = product.Supplier!.FirstOrDefault()!.CodParc,
                 Local = product.Stock?.FirstOrDefault()?.Location?.Description,
                 DhCad = product.DhCad,
                 Mark = product.Mark,
