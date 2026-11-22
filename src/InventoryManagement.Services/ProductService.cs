@@ -14,6 +14,8 @@ namespace InventoryManagement.Services
 
         EditProductResult Edit(EditProductRequest request);
 
+        DeleteProductResult Delete(int codProd, int codLocal, int codSupplier);
+
         ProductResult? GetById(int codProd, int idLoc, int idForn);
 
         IList<ProductResult> List();
@@ -69,6 +71,35 @@ namespace InventoryManagement.Services
             if (affectedRows == 0)
             {
                 result.ErroMenssage = "Erro ao editar o produto.";
+                return result;
+            }
+
+            result.Sucess = true;
+            return result;
+        }
+
+        public DeleteProductResult Delete(int codProd, int codLocal, int codSupplier)
+        {
+            var result = new DeleteProductResult();
+            
+            var exists = _productRepository.GetById(codProd: codProd, idLoc: codLocal, idForn: codSupplier);
+
+            if(exists == null)
+            {
+                result.ErroMenssage = "Produto não econtrado.";
+                return result;
+            }
+
+            var affectedRows = _productRepository.Delete(codProd: codProd, codLocal: codLocal, codSupplier: codSupplier) ?? 0;
+            if (affectedRows == -2292)
+            {
+                result.ErroMenssage = "O produto selecionado possui vinculos ativos com outros locais de estoque ou fornecedores. Realize o procedimento de transferência entre locais para efetuar a exclusão definitiva do produto.";
+                return result;
+            }
+
+            else if (affectedRows == 0)
+            {
+                result.ErroMenssage = "Não foi possível concluir a exclusão do produto";
                 return result;
             }
 

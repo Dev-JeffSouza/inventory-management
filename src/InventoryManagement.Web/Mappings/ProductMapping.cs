@@ -78,7 +78,18 @@ namespace InventoryManagement.Web.Mappings
                 Price = model.Price,
                 Active = model.Active,
                 StockMin = model.StockMin,
-                StockMax = model.StockMax
+                StockMax = model.StockMax,
+            };
+        }
+
+        public static EditLoadViewModel MapToLoad (this EditViewModel model)
+        {
+            return new EditLoadViewModel
+            {
+                CodVol = model?.CodVol,
+                CodLocal = model?.CodLocal,
+                CodSupplier = model?.CodSupplier,
+                Active = model?.Active
             };
         }
     }

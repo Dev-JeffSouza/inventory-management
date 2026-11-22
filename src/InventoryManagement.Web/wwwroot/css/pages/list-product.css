@@ -1,106 +1,124 @@
-﻿
-
-.container-listproduct {
+﻿.container-listproduct {
     display: flex;
     flex: 1;
     flex-direction: column;
     box-sizing: border-box;
     width: 100%;
-    padding: 24px;
-    background: #fff;
+    padding: 16px 20px;
+    background: #ffffff;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
     -webkit-overflow-scrolling: touch;
     overflow-x: auto;
 }
 
-.table-listproduct {
-    width: 100%;
-    border-collapse: collapse;
-    font-family: Arial, sans-serif;
-    background-color: #ffffff;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
-}
-
-    .table-listproduct th {
-        background-color: #0056b3;
-        color: #ffffff;
-        text-align: left;
-        padding: 12px 10px;
-        font-weight: bold;
-    }
-
-    .table-listproduct td {
-        text-align: justify;
-        padding: 12px 15px;
-        border-bottom: 1px solid #e0e0e0;
-        color: #333333;
-    }
-
-    .table-listproduct tbody tr:nth-child(even) {
-        background-color: #f8f9fa;
-    }
-
-    .table-listproduct tbody tr:hover {
-        background-color: #f1f3f5;
-    }
-
 .container-btn {
     display: flex;
-    flex-direction: column;
-    padding: 10px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 0 12px 0;
     width: 100%;
     box-sizing: border-box;
 }
 
 .btn-register {
+    display: inline-flex;
+    align-items: center;
     width: fit-content;
-    padding: 10px;
+    padding: 8px 14px;
     background-color: #0056b3;
-    color: #fff;
+    color: #ffffff;
     text-decoration: none;
     border-radius: 6px;
-    font-size: 14px;
+    font-size: 0.875rem;
     font-weight: 600;
     cursor: pointer;
+    transition: background-color 0.2s ease;
 }
 
     .btn-register:hover {
         background-color: #1d4ed8;
     }
 
+.table-listproduct {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    font-size: 0.875rem;
+    background-color: #ffffff;
+    margin-top: 4px;
+}
+
+    .table-listproduct th {
+        background-color: #0056b3;
+        color: #ffffff;
+        text-align: left;
+        padding: 9px 10px;
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+    .table-listproduct td {
+        text-align: left;
+        vertical-align: middle;
+        padding: 8px 10px;
+        border-bottom: 1px solid #e5e7eb;
+        color: #1f2937;
+    }
+
+        .table-listproduct td:nth-child(1), /* Código */
+        .table-listproduct td:nth-child(3), /* Volume */
+        .table-listproduct td:nth-child(4), /* Custo */
+        .table-listproduct td:nth-child(5), /* Estoque */
+        .table-listproduct td:nth-child(9), /* Preço */
+        .table-listproduct td:nth-child(10), /* Cadastro */
+        .table-listproduct td:nth-child(11), /* Alteração */
+        .table-listproduct td:nth-child(12) /* Ativo */{
+            white-space: nowrap;
+        }
+
+    .table-listproduct tbody tr:nth-child(even) {
+        background-color: #f9fafb;
+    }
+
+    .table-listproduct tbody tr:hover {
+        background-color: #eef4ff;
+    }
+
 .btn-edit {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: 4px;
     width: fit-content;
-    background-color: #0056b3;
-    color: #ffffff;
+    background-color: transparent;
+    color: #0056b3;
     text-decoration: none;
-    padding: 8px 14px;
-    border-radius: 6px;
-    font-size: 0.875rem;
+    padding: 4px 8px;
+    border-radius: 5px;
+    font-size: 0.8125rem;
     font-weight: 600;
     cursor: pointer;
-    border: none;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-    transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
 }
 
     .btn-edit:hover {
-        background-color: #1d4ed8; 
-        color: #ffffff;
+        background-color: #eef4ff;
+        border-color: #bfdbfe;
+        color: #1d4ed8;
         text-decoration: none;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); 
     }
 
     .btn-edit:active {
-        transform: scale(0.98);
+        background-color: #dbeafe;
     }
 
-    #col-edit {
-        text-align: center;
-        padding: 5px
-    }
+#col-edit {
+    text-align: center;
+    padding: 6px 8px;
+    white-space: nowrap;
+}

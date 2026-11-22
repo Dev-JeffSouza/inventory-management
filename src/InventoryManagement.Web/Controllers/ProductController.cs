@@ -1,4 +1,4 @@
-﻿using InventoryManagement.Repositories.Entities;
+﻿
 using InventoryManagement.Services;
 using InventoryManagement.Web.Mappings;
 using InventoryManagement.Web.Models.Product;
@@ -63,7 +63,6 @@ namespace InventoryManagement.Web.Controllers
         //Editar
 
         [Route("edit/{id}/{idloc}/{idsup}")]
-        [HttpGet]
         public IActionResult Edit (int id, int idloc, int idsup)
         {
             var product = _productService.GetById(id, idloc, idsup);
@@ -75,7 +74,8 @@ namespace InventoryManagement.Web.Controllers
             }
 
             var model = product!.MapToEditViewModel();
-            LoadSelects(Codvol: model.CodVol, CodParc: model.CodSupplier, codLoc: model.CodLocal);
+
+            LoadSelects(model.MapToLoad());
             return View(model);
         }
 
@@ -84,7 +84,7 @@ namespace InventoryManagement.Web.Controllers
         public IActionResult Edit(EditViewModel model)
         {
             if (!ModelState.IsValid)
-            {   //implemntar aqui a seleção padrão que vem do banco
+            {  
                 LoadSelects();
                 return View(model);
             }
@@ -100,6 +100,30 @@ namespace InventoryManagement.Web.Controllers
             }
 
             return RedirectToAction("List","Product");
+        }
+
+        [Route("delete/{codProd}")]
+        [HttpPost]
+        public IActionResult Delete(EditViewModel model)
+        {
+            var result = _productService.Delete(codProd: model.CodProd, codLocal: model.CodLocal, codSupplier: model.CodSupplier);
+
+            if (!result.Sucess)
+            {
+                TempData["Erro"] = result.ErroMenssage;
+                return RedirectToAction("Edit", "Product", new { id = model.CodProd, idloc = model.CodLocal, idsup = model.CodSupplier});
+               
+            }
+
+            return RedirectToAction("List", "Product");
+        }
+
+        private void LoadSelects(EditLoadViewModel? load = null)
+        {
+            ViewBag.Volume = GetVolume(load?.CodVol);
+            ViewBag.Partner = GetPartner(load?.CodSupplier);
+            ViewBag.Location = GetLocation(load?.CodLocal);
+            ViewBag.Active = GetActive(load?.Active);
         }
 
         private List<SelectListItem> GetVolume(int? selectedCodvol = null)
@@ -140,13 +164,24 @@ namespace InventoryManagement.Web.Controllers
             return locations;
         }
 
-        private void LoadSelects (int? Codvol = null, int? CodParc = null, int? codLoc = null)
-        {
-            ViewBag.Volume = GetVolume(Codvol);
-            ViewBag.Partner = GetPartner(CodParc);
-            ViewBag.Location = GetLocation(codLoc);
+        private List<SelectListItem> GetActive(string? selectedActive = null)
+        {   
+            return new List<SelectListItem>
+            {
+                new SelectListItem
+                {
+                    Value = "S",
+                    Text = "Sim",
+                    Selected = selectedActive == "S"
+                },
+
+                new SelectListItem
+                {
+                    Value = "N",
+                    Text = "Não",
+                    Selected = selectedActive == "N"
+                }
+            };
         }
-
-
     }
 }

@@ -47,7 +47,7 @@
         opacity: 1;
         cursor: not-allowed;
         caret-color: transparent;
-        user-select: none; /* Opcional: impede selecionar e arrastar o texto */
+        user-select: none; 
     }
 
         .form-group #codprod:read-only:focus {
@@ -97,4 +97,27 @@
 
 .product-form .form-group:has(button[type="submit"]) {
     grid-column: 1 / -1;
+    flex-direction: row;
+    width: fit-content;
+    margin-top: 10px;
+    gap: 12px;
+    align-items: center;
+    width: fit-content;
 }
+
+.product-form .form-group:has(#btn-exc) #btn-exc {
+    background-color: #dc3545;
+    color: #ffffff;
+    border: 1px solid #dc3545;
+}
+
+    .product-form .form-group:has(#btn-exc) #btn-exc:hover {
+        background-color: #bb2d3b;
+        border-color: #b02a37;
+        color: #ffffff;
+    }
+
+    .product-form .form-group:has(#btn-exc) #btn-exc:active {
+        background-color: #b02a37;
+        border-color: #a52834;
+    }

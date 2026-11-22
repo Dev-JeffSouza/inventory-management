@@ -9,7 +9,7 @@ namespace InventoryManagement.Web.Components
         {
             var modal = new ModalErroViewModel
             {
-                Msg = ViewData["Erro"] as string
+                Msg = ViewData["Erro"] as string ?? TempData["Erro"] as string
             };
 
             return View(modal);
