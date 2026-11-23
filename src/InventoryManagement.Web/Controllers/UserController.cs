@@ -22,7 +22,6 @@ namespace InventoryManagement.Web.Controllers
             return View();
         }
 
-
         [Route("login")]
         [HttpPost]
         public IActionResult Login(LoginViewModel model)

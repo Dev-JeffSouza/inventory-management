@@ -1,0 +1,40 @@
+﻿@using InventoryManagement.Web.Models.Panel
+@model InventoryManagement.Web.Models.Location.CreateViewModel
+
+@{
+    ViewData["Title"] = "Locais";
+    ViewData["Panel"] = Panel.Locais;
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/pages/create-location.css" />
+    <link rel="stylesheet" href="~/css/validate-forms.css" />
+}
+
+<div class="location-create-container">
+    <span id="title-register">Cadastrar Local de Estoque</span>
+
+    <form class="location-form validate-forms" novalidate asp-controller="Location" asp-action="Create">
+
+        <div class="form-group">
+            <label for="description">Descrição</label>
+            <input type="text" id="description" required asp-for="Description" />
+        </div>
+
+        <div class="form-group">
+            <label for="slc-active">Ativo</label>
+            <select id="slc-supplier" class="form-select" required asp-items="ViewBag.Active" asp-for="Active">
+                <option value="" disabled selected hidden="">Selecione</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <button type="submit">Cadastrar</button>
+        </div>
+
+    </form>
+</div>
+
+@section Scripts {
+    <script src="~/js/validate-forms.js"></script>
+}
