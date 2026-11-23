@@ -26,10 +26,12 @@ var connectionString = builder.Configuration.GetConnectionString("InventoryManag
 //Injeção das dependências
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ILocationService, LocationService>();
 
 //Inicialização das interfaces com a connectionString
 builder.Services.AddScoped<IUserRepository, UserRepository>(u => new UserRepository(connectionString!));
 builder.Services.AddScoped<IProductRepository, ProductRepository>(p => new ProductRepository(connectionString!));
+builder.Services.AddScoped<ILocationRepository, LocationRepository>(l => new LocationRepository(connectionString!));
 
 var app = builder.Build();
 

@@ -1,0 +1,55 @@
+﻿@using InventoryManagement.Web.Models.Panel
+@model IList<InventoryManagement.Web.Models.Location.ListViewModel>
+
+@{
+    ViewData["Title"] = "Locais";
+    ViewData["Panel"] = Panel.Locais;
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/pages/list-location.css" />
+    <lik rel="stylesheet" href="~/css/pages/modal.css" />
+}
+
+<div class="container-listlocation">
+    <div class="container-btn">
+        <a class="btn-register" asp-controller="Location" asp-action="Create">Novo</a>
+    </div>
+
+    <table class="table-listlocation">
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Descrição</th>
+                <th>Ativo</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @if (Model?.Count > 0)
+            {
+                @foreach (var location in Model)
+                {
+                    <tr>
+                        <td>@location.CodLocal</td>
+                        <td>@location.Description</td>
+                        <td>@location.Active</td>
+                        <td id="col-edit">
+                            <a class="btn-edit">
+                                Editar
+                            </a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <p>Não há locais cadastrados.</p>
+            }
+
+        </tbody>
+    </table>
+
+</div>
