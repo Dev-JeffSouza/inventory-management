@@ -356,7 +356,7 @@ namespace InventoryManagement.Repositories
                                     NVL(EST.QUANTIDADE, 0) AS QUANTIDADE, 
                                     NVL(EST.ESTMIN, 0) AS ESTMIN, 
                                     NVL(EST.ESTMAX, 0) AS ESTMAX,
-                                    EST.CODLOCAL
+                                    NVL(EST.CODLOCAL, 0) AS CODLOCAL
                                 FROM PRODUTO PRO
                                 LEFT JOIN FORNECEDOR FORN 
                                    ON FORN.CODPROD = PRO.CODPROD 

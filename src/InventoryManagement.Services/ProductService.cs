@@ -57,7 +57,8 @@ namespace InventoryManagement.Services
         public EditProductResult Edit(EditProductRequest request)
         {
             var result = new EditProductResult();
-           
+            
+            //OBS: Desncessário na Action Edit, pois no caso de um update poderá retornar null por não existir correspondência no banco (criei fallbacks no repositótio).
             var existingProduct = _productRepository.GetById(request.CodProd, request.CodLocal, request.CodSupplier);
 
             if (existingProduct == null)
@@ -76,7 +77,7 @@ namespace InventoryManagement.Services
             result.Sucess = true;
             return result;
         }
-
+        //Refatorar depois
         public DeleteProductResult Delete(int codProd, int codLocal, int codSupplier)
         {
             var result = new DeleteProductResult();

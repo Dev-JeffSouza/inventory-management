@@ -19,7 +19,6 @@ namespace InventoryManagement.Services
 
     }
 
-
     public class LocationService : ILocationService
     {
         private readonly ILocationRepository _locationRepository;

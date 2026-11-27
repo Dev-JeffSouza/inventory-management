@@ -37,34 +37,42 @@
 
         <tbody>
 
-            @foreach (var product in Model)
+            @if (Model.Count > 0)
+            {
+                @foreach (var product in Model)
+                {
+                    <tr>
+                        <td>@product.CodProd</td>
+                        <td>@product.Description</td>
+                        <td>@product.DescrVol</td>
+                        <td>@product.Cost</td>
+                        <td>@product.Quantity</td>
+                        <td>@product.Local</td>
+                        <td>@product.Supplier</td>
+                        <td>@product.Mark</td>
+                        <td>@product.Price</td>
+                        <td>@product.DhCad</td>
+                        <td>@product.DhAlter</td>
+                        <td>@product.Active</td>
+                        <td id="col-edit">
+                            <a class="btn-edit"
+                               asp-controller="Product"
+                               asp-action="Edit"
+                               asp-route-id="@product.CodProd"
+                               asp-route-idloc="@product.CodLocal"
+                               asp-route-idsup="@product.CodSuplier">
+                                Editar
+                            </a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
             {
                 <tr>
-                    <td>@product.CodProd</td>
-                    <td>@product.Description</td>
-                    <td>@product.DescrVol</td>
-                    <td>@product.Cost</td>
-                    <td>@product.Quantity</td>
-                    <td>@product.Local</td>
-                    <td>@product.Supplier</td>
-                    <td>@product.Mark</td>
-                    <td>@product.Price</td>
-                    <td>@product.DhCad</td>
-                    <td>@product.DhAlter</td>
-                    <td>@product.Active</td>
-                    <td id="col-edit">
-                        <a class="btn-edit"
-                           asp-controller="Product"
-                           asp-action="Edit"
-                           asp-route-id="@product.CodProd"
-                           asp-route-idloc="@product.CodLocal"
-                           asp-route-idsup="@product.CodSuplier">
-                            Editar
-                        </a>
-                    </td>
+                    <td>Não há produtos cadastrados.</td>
                 </tr>
             }
-      
         </tbody>
     </table>
 
