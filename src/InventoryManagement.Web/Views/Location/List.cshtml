@@ -37,7 +37,10 @@
                         <td>@location.Description</td>
                         <td>@location.Active</td>
                         <td id="col-edit">
-                            <a class="btn-edit">
+                            <a class="btn-edit" 
+                                asp-controller="Location" 
+                                asp-action="Edit" 
+                                asp-route-id="@location.CodLocal">
                                 Editar
                             </a>
                         </td>
@@ -46,7 +49,9 @@
             }
             else
             {
-                <p>Não há locais cadastrados.</p>
+                <tr>
+                    <td>Não há locais cadastrados.</td>
+                </tr>
             }
 
         </tbody>

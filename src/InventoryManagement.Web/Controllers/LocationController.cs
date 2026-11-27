@@ -44,8 +44,7 @@ namespace InventoryManagement.Web.Controllers
                 ViewData["Erro"] = result.ErroMenssage;
                 return View(model);
             }
-
-            return RedirectToAction("List","Location");
+            return RedirectToAction("List", "Location");
         }
 
         [Route("list")]
@@ -53,33 +52,82 @@ namespace InventoryManagement.Web.Controllers
         {
             var listRequest = _locationService.List();
             var listResult = listRequest?.Select(l => l.MapToListViewModel()).ToList();
+        
+
             return View(listResult);
         }
 
-
-        private List<SelectListItem> ListItens()
+        [Route("edit/{id}")]
+        public IActionResult Edit(int id)
         {
+            var location = _locationService.GetById(id);
+            var model = location?.MapToEditViewModel();
+            LoadSelect(model?.Active);
+
+            return View(model);
+        }
+
+        [Route("edit/{id}")]
+        [HttpPost]
+        public IActionResult Edit(EditViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var result = _locationService.Update(model.MaptToEditRequest());
+
+            if (!result.Sucess)
+            {
+                ViewData["Erro"] = result.ErroMenssage;
+                LoadSelect(model?.Active);
+                return View(model);
+            }
+            return RedirectToAction("List", "Location");
+        }
+
+        [Route("delete/{id}")]
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            var result = _locationService.Delete(id);
+
+            if (!result.Sucess)
+            {
+                ViewData["Erro"] = result.ErroMenssage;
+                return RedirectToAction("Edit", "Location");
+            }
+
+            return RedirectToAction("List", "Location");
+        }
+
+        private List<SelectListItem> ListItens(string? selected = null)
+        {
+            var defaultSlc = selected;
+            defaultSlc ??= "S";
+
             return new List<SelectListItem>
             {
                 new SelectListItem
                 {
                     Value = "S",
                     Text = "Sim",
-                    Selected = true
+                    Selected = defaultSlc == "S"
                 },
 
                 new SelectListItem
                 {
                     Value = "N",
                     Text = "Não",
-                    Selected = false
+                    Selected = defaultSlc == "N"
                 }
             };
         }
 
-        private void LoadSelect()
+        private void LoadSelect(string? selected = null)
         {
-            ViewBag.Active = ListItens();
+            ViewBag.Active = ListItens(selected);
         }
 
     }

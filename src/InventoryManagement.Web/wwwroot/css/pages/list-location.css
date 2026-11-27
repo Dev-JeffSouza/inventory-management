@@ -43,7 +43,7 @@
     }
 
 .table-listlocation {
-    width: 100%;
+    width: fit-content;
     border-collapse: collapse;
     font-family: Arial, sans-serif;
     font-size: 0.875rem;
@@ -70,7 +70,7 @@
 
         .table-listlocation td:nth-child(1), /* Código */
         .table-listlocation td:nth-child(2), /* Descrição */
-        .table-listlocation td:nth-child(3), /* Ativo */
+        .table-listlocation td:nth-child(3) /* Ativo */
         {
             white-space: nowrap;
         }

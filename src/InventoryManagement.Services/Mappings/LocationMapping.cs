@@ -23,5 +23,15 @@ namespace InventoryManagement.Services.Mappings
                 Active = result.Active
             };
         }
+
+        public static Location MapToLocation(this EditLocationRequest request)
+        {
+            return new Location
+            {
+                CodLocal = request.CodLocal,
+                Description = request.Description.ToUpper(),
+                Active = request.Active
+            };
+        }
     }
 }

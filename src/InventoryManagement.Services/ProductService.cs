@@ -54,7 +54,6 @@ namespace InventoryManagement.Services
             return result;
         }
 
-
         public EditProductResult Edit(EditProductRequest request)
         {
             var result = new EditProductResult();
@@ -150,6 +149,7 @@ namespace InventoryManagement.Services
             return result;
         }
 
+      
     };
 
 }

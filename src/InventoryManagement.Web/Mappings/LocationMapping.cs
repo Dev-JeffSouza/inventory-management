@@ -23,5 +23,25 @@ namespace InventoryManagement.Web.Mappings
                 Active = result.Active
             };
         }
+
+        public static EditViewModel MapToEditViewModel(this LocationResult result)
+        {
+            return new EditViewModel
+            {
+                CodLocal = result.CodLocal,
+                Description = result.Description,
+                Active = result.Active
+            };
+        }
+
+        public static EditLocationRequest MaptToEditRequest(this EditViewModel request)
+        {
+            return new EditLocationRequest
+            {
+                CodLocal = request.CodLocal,
+                Description = request.Description,
+                Active = request.Active
+            };
+        }
     }
 }

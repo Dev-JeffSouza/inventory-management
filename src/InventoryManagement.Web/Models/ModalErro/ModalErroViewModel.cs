@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualBasic;
-
+﻿
 namespace InventoryManagement.Web.Models.ModalErro
 {
     public class ModalErroViewModel
