@@ -95,8 +95,8 @@ namespace InventoryManagement.Web.Controllers
 
             if (!result.Sucess)
             {
-                ViewData["Erro"] = result.ErroMenssage;
-                return RedirectToAction("Edit", "Location");
+                TempData["Erro"] = result.ErroMenssage;
+                return RedirectToAction("Edit", "Location", new {id});
             }
 
             return RedirectToAction("List", "Location");
