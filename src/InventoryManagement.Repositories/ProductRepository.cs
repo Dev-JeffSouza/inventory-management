@@ -20,7 +20,7 @@ namespace InventoryManagement.Repositories
 
         IList<Partner> GetPartner();
 
-        IList<Location> GetLocation();
+        IList<Location> GetLocation(int? codLocal = null);
     }
 
     public class ProductRepository : BaseRepository, IProductRepository
@@ -134,6 +134,7 @@ namespace InventoryManagement.Repositories
             return affectedRows;
         }
 
+        //REVER ESTE MÉTODO (IRÁ CONFLITAR COM TRANFERÊNCIAS ENTRE LOCAIS)
         public int? Update(Product product)
         {
             var affectedRows = 0;
@@ -196,6 +197,8 @@ namespace InventoryManagement.Repositories
                                     cmdStock.Parameters.Add(new OracleParameter(":ESTOCKMAX", stock.StockMax));
                                     cmdStock.Parameters.Add(new OracleParameter(":ACTIVE", 'S'.ToString()));
 
+                                    cmdStock.ExecuteNonQuery();
+
                                     affectedRows = cmdStock.ExecuteNonQuery();
 
                                     if (affectedRows == 0)
@@ -238,6 +241,8 @@ namespace InventoryManagement.Repositories
                                     cmdSupplier.Parameters.Add(new OracleParameter(":CODPROD", product.CodProd));
                                     cmdSupplier.Parameters.Add(new OracleParameter(":CODPARC", supplier.CodParc));
                                     cmdSupplier.Parameters.Add(new OracleParameter(":COST", supplier.Cost));
+
+                                    cmdSupplier.ExecuteNonQuery();
 
                                     affectedRows = cmdSupplier.ExecuteNonQuery();
 
@@ -416,6 +421,8 @@ namespace InventoryManagement.Repositories
             return product;
         }
 
+
+
         public IList<Volume> GetVolume()
         {
             var volumeList = new List<Volume>();
@@ -476,16 +483,20 @@ namespace InventoryManagement.Repositories
             return partnerList;
         }
 
-        public IList<Location> GetLocation()
+        public IList<Location> GetLocation(int? codLocal = null)
         {
             var locationList = new List<Location>();
             using (var conn = new OracleConnection(connectionString))
             {
                 conn.Open();
                 string query = @"SELECT CODLOCAL, DESCRLOCAL, ATIVO FROM LOCAL
+                                WHERE (:CODLOCAL IS NULL OR CODLOCAL = :CODLOCAL)
                                 ORDER BY DESCRLOCAL ASC";
                 using (var cmd = new OracleCommand(query, conn))
                 {
+                    cmd.BindByName = true;
+                    cmd.Parameters.Add(new OracleParameter(":CODLOCAL", (object?)codLocal ?? DBNull.Value));
+
                     using (var reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())

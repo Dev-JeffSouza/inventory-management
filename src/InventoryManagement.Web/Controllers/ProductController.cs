@@ -51,7 +51,6 @@ namespace InventoryManagement.Web.Controllers
 
         }
 
-        //Listar
         [Route("list")]
         public IActionResult List()
         {   
@@ -59,8 +58,6 @@ namespace InventoryManagement.Web.Controllers
             var result = listResult.Select(p => p.MapToProductListViewModel()).ToList();
             return View(result);
         }
-
-        //Editar
 
         [Route("edit/{id}/{idloc}/{idsup}")]
         public IActionResult Edit (int id, int idloc, int idsup)

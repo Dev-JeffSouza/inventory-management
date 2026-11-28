@@ -53,7 +53,6 @@ namespace InventoryManagement.Web.Controllers
             var listRequest = _locationService.List();
             var listResult = listRequest?.Select(l => l.MapToListViewModel()).ToList();
         
-
             return View(listResult);
         }
 

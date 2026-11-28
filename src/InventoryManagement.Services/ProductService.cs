@@ -42,6 +42,15 @@ namespace InventoryManagement.Services
         {
             var result = new CreateProductResult();
 
+            var locActive = _productRepository.GetLocation(request.CodLocal);
+            bool isActive = locActive.Any(l => l.Active == "S");
+
+            if (!isActive)
+            {
+                result.ErroMenssage = "Não foi possível salvar o produto no local de estoque indicado, pois ele está inativo. Reative o local na aba *Locais*.";
+                return result;
+            }
+           
             var affectedRows = _productRepository.Insert(request.MapToProduct());
 
             if (affectedRows == 0 || affectedRows == null)
